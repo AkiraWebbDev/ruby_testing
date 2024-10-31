@@ -70,34 +70,69 @@ describe MagicSeven do
   # Write a test for each of the following methods:
 
   describe '#subtract_four' do
+    context 'when you subtract four from two' do
+      it 'returns -2' do
+        random_number = 2
+        result = game.subtract_four(random_number)
+        expect(result).to eql(-2)
+      end
+    end
   end
 
   describe '#divide_by_two' do
+    context 'when you divide ten by two' do
+      it 'returns 5' do
+        random_number = 10
+        result = game.divide_by_two(random_number)
+        expect(result).to eql(5)
+      end
+    end
   end
 
   # The following tests will need you to create new instances of MagicSeven with
   # a specific value for the random_number.
   describe '#subtract_random_number' do
+    random_number = 20
+    subject(:twenty) { MagicSeven.new(random_number) }
+
+    context 'when subtracting the random number' do
+      it 'returns zero' do
+        result = twenty.subtract_random_number(random_number)
+        expect(result).to eql(0)
+      end
+    end
   end
 
   # The #play method will always return seven! Test this game, using any
   # integer as the random_number. Update the context with the number.
   describe '#play' do
-    context 'when the random number is ...' do
+    context 'when the random number is 50' do
+      random_number = 50
+      subject(:fifty) { MagicSeven.new(random_number) }
+
       # remove the 'x' before running this test
-      xit 'will return 7' do
+      it 'will return 7' do
+        expect(fifty.play).to eql(7)
       end
     end
 
-    context 'when the random number is ...' do
+    context 'when the random number is 1000' do
+      random_number = 1000
+      subject(:thousand) { MagicSeven.new(random_number) }
+
       # remove the 'x' before running this test
-      xit 'will return 7' do
+      it 'will return 7' do
+        expect(thousand.play).to eql(7)
       end
     end
 
-    context 'when the random number is ...' do
+    context 'when the random number is 77' do
+      random_number = 77
+      subject(:seventyseven) { MagicSeven.new(random_number) }
+
       # remove the 'x' before running this test
-      xit 'will return 7' do
+      it 'will return 7' do
+        expect(seventyseven.play).to eql(7)
       end
     end
   end
