@@ -130,17 +130,34 @@ describe BinaryGame do
 
     context 'when user inputs an incorrect value once, then a valid input' do
       before do
+        invalid_input = '20'
+        valid_input = '2'
+        allow(game_input).to receive(:gets).and_return(invalid_input, valid_input)
       end
 
-      xit 'completes loop and displays error message once' do
+      it 'completes loop and displays error message once' do
+        min = game_input.instance_variable_get(:@minimum)
+        max = game_input.instance_variable_get(:@maximum)
+        error_message = "Input error! Please enter a number between #{min} or #{max}."
+        expect(game_input).to receive(:puts).with(error_message).once
+        game_input.player_input(min, max)
       end
     end
 
     context 'when user inputs two incorrect values, then a valid input' do
       before do
+        first_invalid_input = '20'
+        second_invalid_input = 'abc'
+        valid_input = '2'
+        allow(game_input).to receive(:gets).and_return(first_invalid_input, second_invalid_input, valid_input)
       end
 
-      xit 'completes loop and displays error message twice' do
+      it 'completes loop and displays error message twice' do
+        min = game_input.instance_variable_get(:@minimum)
+        max = game_input.instance_variable_get(:@maximum)
+        error_message = "Input error! Please enter a number between #{min} or #{max}."
+        expect(game_input).to receive(:puts).with(error_message).twice
+        game_input.player_input(min, max)
       end
     end
   end
@@ -154,14 +171,26 @@ describe BinaryGame do
     # Query Method -> Test the return value
 
     # Note: #verify_input will only return a number if it is between?(min, max)
+    subject(:game_input) { described_class.new(5, 10) }
 
     context 'when given a valid input as argument' do
-      xit 'returns valid input' do
+      it 'returns valid input' do
+        min = game_input.instance_variable_get(:@minimum)
+        max = game_input.instance_variable_get(:@maximum)
+        valid_input = 8
+        result = game_input.verify_input(min, max, valid_input)
+        expect(result).to eql(valid_input)
       end
     end
 
     context 'when given invalid input as argument' do
-      xit 'returns nil' do
+      it 'returns nil' do
+        min = game_input.instance_variable_get(:@minimum)
+        max = game_input.instance_variable_get(:@maximum)
+        invalid_input = 80
+        result = game_input.verify_input(min, max, invalid_input)
+        expect(result).not_to eql(invalid_input)
+        expect(result).to eql(nil)
       end
     end
   end
@@ -184,8 +213,8 @@ describe BinaryGame do
 
     context 'when updating value of random number' do
       # Instead of using a normal double, as we did in TDD, we are going to
-      # use an instance_double. Differently from the normal test double we've 
-      # been using so far, a verifying double can produce an error if the method 
+      # use an instance_double. Differently from the normal test double we've
+      # been using so far, a verifying double can produce an error if the method
       # being stubbed does not exist in the actual class. Verifying doubles are a
       # great tool to use when you're doing integration testing and need to make
       # sure that different classes work together in order to fulfill some bigger
