@@ -285,7 +285,8 @@ describe BinaryGame do
       subject(:game_six_hundred) { described_class.new(100, 600) }
 
       it 'returns 9' do
-        
+        max = game_six_hundred.maximum_guesses
+        expect(max).to eq(9)
       end
     end
   end
